@@ -8,13 +8,9 @@ pip install django
 ```
 
 ## Usage
-
+Clone or download repo. Navigate to todoapp folder and open cmd to type following command
 ```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+manage.py runserver
 ```
 
 ## Contributing
