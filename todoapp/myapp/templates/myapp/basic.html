@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <title>To Do App</title>
+
+  <style type="text/css"> 
+
+    #main_app{
+      display: grid;
+      grid-template-rows: auto auto;
+      border: 2px solid black;
+      
+    }
+
+    .my_container{
+      text-align: center;
+
+    }
+
+    #title{
+      border : 2px solid purple;
+      background-color: black;
+      color: yellow;
+      font-weight: bold;
+      font-size: 30px;
+      padding: 10px;
+    }
+
+    #search{
+      border  : 2px solid black;
+      padding: 15px;
+    }
+
+    #search input{
+      border  : 2px solid black;
+      border-radius: 25px;
+      text-align: center;
+      font-weight: normal;
+      font-size: 25px;
+      width : 50%;
+      padding: 8px;
+    }
+
+    #search div{
+      margin: 10px;
+    }
+
+    #search button{
+      border : 2px solid purple;
+      background-color: purple;
+      color : yellow;
+      font-weight: bold;
+      font-size: 20px;
+      width : 35%;
+      padding: 12px;
+      opacity: 0.68;
+    }
+
+    #search button:hover{
+      cursor: pointer;
+      opacity: 0.95;
+    }
+
+    #elements{
+      border  : 2px solid black;
+    }
+
+    .new_data{
+      display: grid;
+      cursor: pointer;
+      grid-template-columns  : 7fr 2fr 1fr 1fr;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #CCCCFF;
+      opacity: 0.7;
+      border : 1px solid black;
+      padding: 10px;
+    }
+
+    .new_data:hover{
+      opacity: 1;
+    }
+
+    .new_data button{
+      font-size: 16px;
+      border-radius: 10px ;
+      font-weight: bold;
+      margin-right: 10px  ;
+      padding: 8px;
+    }
+
+    button.new_data_edit{
+        cursor: pointer;
+        color: yellow;
+        background-color: green;
+        opacity: 0.7;
+    }
+
+    button.new_data_delete{
+      cursor: pointer;
+      color: yellow;
+      background-color: red;
+      opacity: 0.7;
+    }
+
+    button.new_data_edit:hover{ opacity: 0.99;  }
+
+    button.new_data_delete:hover{ opacity: 0.99; }
+
+  </style>
+  <body>
+
+    <div id = 'main_app'>
+        <div id = 'title' class = 'my_container'>
+          To Do List App
+        </div>
+
+        <div id = 'search' class = 'my_container'>
+          <form action = '#' method="POST">{% csrf_token %}
+            <div><input type="text" name="element_name" placeholder="Product name" required  maxlength="30" ></div>
+            <div><button>Add Item</button></div>
+          </form>
+        </div>
+        
+        <div id = 'elements' >
+          {% for element in data_all %}
+            <form id = '{{element.1}}' class = 'new_data' action = '' method="POST" >{% csrf_token %}
+              {% if element.0.is_done %}
+                <span>{{element.0.name}}</span>
+                <span>Done</span>
+                <input type="text" name="element_name" style="display:none;" value="{{element.0.name}}">
+                <input type="text" name='element_status' style="display:none;" value="Done">
+              {% else %}
+                <span name='element_name'>{{element.0.name}}</span>
+                <span name='element_status'>Pending</span>                  
+                <input type="text" name="element_name" style="display:none;" value="{{element.0.name}}">
+                <input type="text" name='element_status' style="display:none;" value="Pending">
+              {% endif %}
+              <button class = 'new_data_delete' onclick = 'delete_item()'>Delete</button>
+              <button class = 'new_data_edit' onclick = 'edit_item()'>Edit</button>
+            </form>
+          {% endfor %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+      if("{{message}}" != 'none' ){
+        console.log( "{{message}}" )
+      }
+
+      let func_delete = function(event) {
+        console.log( event.target.parentNode );
+        path_new = 'delete_item/'
+        event.target.parentNode.setAttribute('action', path_new);
+        document.getElementById('elements').removeEventListener('click', func_delete );
+      }
+
+      let func_edit = function(event) {
+        console.log( event.target.parentNode );
+        path_new = 'edit_item/'
+        event.target.parentNode.setAttribute('action', path_new);
+        document.getElementById('elements').removeEventListener('click', func_edit );
+      }
+
+
+      function delete_item() {
+        let ask_user = confirm('Are you sure you wanna delete this record ?');
+        if(ask_user == true){
+          document.getElementById('elements').addEventListener('click',  func_delete); }
+        }
+
+      function edit_item() {
+        document.getElementById('elements').addEventListener('click',  func_edit);
+        }
+
+    </script>
+
+  </body>
+</html>

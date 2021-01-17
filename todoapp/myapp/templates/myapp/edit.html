@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<body>
+
+<h3>Edit Item</h3>
+
+<div>
+  <form action="">
+    <label for="new_name">Item Name</label>
+    <input type="text" id="fname" name="new_name" placeholder="Item name" value="{{name}}">
+    <label for="country">Status</label>
+
+    <select id="country" name="new_status" >
+      {% if val == 'Pending' %}
+        <option value="Pending" selected>Pending</option>
+        <option value="Done">Done</option>
+      {% elif val == 'Done' %}
+        <option value="Pending">Pending</option>
+        <option value="Done" selected>Done</option>
+      {% endif %}
+    </select>
+    <input type="text" name="org_name" style="display : none;" value = "{{name}}" >
+    <input type="text" name="org_status" style="display : none;" value="{{val}}">
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>
