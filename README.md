@@ -1,5 +1,5 @@
 # To-Do-App-Django
-Django is a python library for backend used in web apps / websites/ hybrid apps
+Its a basic todo app made using django , html , css and javascript..
 
 ## Features
 1- Add items
